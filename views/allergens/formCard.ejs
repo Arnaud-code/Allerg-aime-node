@@ -1,0 +1,31 @@
+
+<div class="card col-lg-6 mb-4 mx-auto">
+    <h2 class="card-header h3 my-2"><% if (currentAllergen) { %>Modification<% } else { %>Ajout<% } %> d'allergène</h2>
+    <div class="card-body">
+        <form action="/allergens<% if (currentSlug) { %>/<%= currentSlug %><% } %>" method="post" data-bitwarden-watching="1">
+            <fieldset>
+                <div class="form-group row">
+                    <label for="allergenName" class="col-lg-2 col-form-label">Nom</label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" name="name" id="allergenName" <% if (currentAllergen) { %>value=<%= currentAllergen.name %> <% } %>placeholder="Nom de l'allergène" required>
+                    </div>
+                    <label for="allergenSort" class="col-lg-2 col-form-label">Ordre</label>
+                    <div class="col-lg-2">
+                        <input type="number" class="form-control" name="sort" id="allergenSort" value=<% if (currentAllergen) { %><%= currentAllergen.sort %><% } else { %>0<% } %>>
+                    </div>
+                </div>
+                <div class="form-group row mt-2">
+                    <label for="allergenDescription" class="col-form-label">Description</label>
+                    <textarea rows="3" name="description" id="allergenDescription" class="form-control" <% if (currentAllergen) { %>value=<%= currentAllergen.description %> <% } %>placeholder="Description de l'allergène"><% if (currentAllergen) { %><%= currentAllergen.description %><% } %></textarea>
+                </div>
+            </fieldset>
+            <div class="d-flex justify-content-around mt-4">
+                <button type="submit" class="btn btn-sm btn-info"><i class="fa-solid fa-floppy-disk"></i> <% if (currentAllergen) { %>Modifier<% } else { %>Ajouter<% } %></button>
+                <% if (currentAllergen) { %>
+                <a href="/allergens" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-rotate-left"></i> Annuler</a>
+                <a href="/allergens/<%= currentAllergen.slug %>/delete" class="btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i> Supprimer</a>
+                <% } %>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+<div class="card">
+    <h2 class="card-header h3 my-2">Allergènes existants</h2>
+    <div class="card-body">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Ordre</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (allergen of allergens) { %>
+                <tr class="<% if (currentSlug === allergen.slug) { %>table-info<% } %>">
+                    <th scope="row"><%= allergen.name %></th>
+                    <td><%= allergen.description %></td>
+                    <td><%= allergen.sort %></td>
+                    <td class="text-center">
+                        <% if (!currentAllergen) { %>
+                        <a href="/allergens/<%= allergen.slug %>" class="btn btn-info btn-sm mx-2"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a href="/allergens/<%= allergen.slug %>/delete" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></a>
+                        <% } %>
+                    </td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+
+<div class="card col-lg-6 mb-4 mx-auto">
+    <h2 class="card-header h3 my-2"><% if (currentProduct) { %>Modification<% } else { %>Ajout<% } %> de produit</h2>
+    <div class="card-body">
+        <form action="/products<% if (currentSlug) { %>/<%= currentSlug %><% } %>" method="post" data-bitwarden-watching="1">
+            <fieldset>
+                <div class="form-group row">
+                    <label for="productName" class="col-lg-2 col-form-label">Nom</label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" name="name" id="productName" <% if (currentProduct) { %>value=<%= currentProduct.name %> <% } %>placeholder="Nom du produit" required>
+                    </div>
+                    <label for="productSort" class="col-lg-2 col-form-label">Ordre</label>
+                    <div class="col-lg-2">
+                        <input type="number" class="form-control" name="sort" id="productSort" value=<% if (currentProduct) { %><%= currentProduct.sort %><% } else { %>0<% } %>>
+                    </div>
+                </div>
+                <div class="form-group row mt-2">
+                    <label for="productCategory" class="col-lg-2 col-form-label">Catégorie</label>
+                    <div class="col-lg-6">
+                        <select name="category" id="productCategory" class="form-select">
+                            <option value="" selected disabled>Choisir une catégorie</option>
+                            <% for (category of categories) { %>
+                                <option value="<%= category._id %>"<% if ( String(category._id) == String(currentCategoryId)) { %> selected<% } %>><%= category.name %></option>
+                            <% } %>
+                        </select>
+                    </div>
+                    <label for="productPrice" class="col-lg-2 col-form-label">Prix</label>
+                    <div class="col-lg-2">
+                        <input type="text" class="form-control" name="price" id="productPrice" value=<% if (currentProduct) { %><%= currentProduct.price %><% } else { %>0<% } %>>
+                    </div>
+                </div>
+                <div class="form-group row mt-2">
+                    <label for="productDescription" class="col-form-label">Description</label>
+                    <textarea rows="3" name="description" id="productDescription" class="form-control" <% if (currentProduct) { %>value=<%= currentProduct.description %> <% } %>placeholder="Description du produit"><% if (currentProduct) { %><%= currentProduct.description %><% } %></textarea>
+                </div>
+                <div class="form-check form-switch mt-2">
+                    <input class="form-check-input" type="checkbox" name="isTrashed" id="flexSwitchCheckChecked"<% if (currentProduct && currentProduct.isTrashed) { %> checked=""<% } %>>
+                    <label class="form-check-label" for="flexSwitchCheckChecked">A la corbeille</label>
+                </div>
+            </fieldset>
+            <div class="d-flex justify-content-around mt-4">
+                <button type="submit" class="btn btn-sm btn-info"><i class="fa-solid fa-floppy-disk"></i> <% if (currentProduct) { %>Modifier<% } else { %>Ajouter<% } %></button>
+                <% if (currentProduct) { %>
+                <a href="/products" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-rotate-left"></i> Annuler</a>
+                <a href="/products/<%= currentProduct.slug %>/delete" class="btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i> Supprimer</a>
+                <% } %>
+            </div>
+        </form>
+    </div>
+</div>
